@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/add_HeaderView"
+        app:showAsAction="never"
+        android:title="addHeader" />
+    <item
+        android:id="@+id/delete_HeaderView"
+        app:showAsAction="never"
+        android:title="deleteHeader" />
+    <item
+        android:id="@+id/add_FooterView"
+        app:showAsAction="never"
+        android:title="addFooter" />
+    <item
+        android:id="@+id/delete_FooterView"
+        app:showAsAction="never"
+        android:title="deleteFooter" />
+</menu>
