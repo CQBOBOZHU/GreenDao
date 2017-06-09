@@ -24,13 +24,13 @@ public class UserBeanDao extends AbstractDao<UserBean, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", false, "ID");
-        public final static Property _id = new Property(1, long.class, "_id", true, "_id");
-        public final static Property UserAccound = new Property(2, String.class, "userAccound", false, "USER_ACCOUND");
-        public final static Property UserIdentity = new Property(3, String.class, "userIdentity", false, "USER_IDENTITY");
-        public final static Property UserAuthentication = new Property(4, String.class, "userAuthentication", false, "USER_AUTHENTICATION");
-        public final static Property Locked = new Property(5, boolean.class, "locked", false, "LOCKED");
-        public final static Property RegisterTime = new Property(6, String.class, "registerTime", false, "REGISTER_TIME");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property UserAccound = new Property(1, String.class, "userAccound", false, "USER_ACCOUND");
+        public final static Property UserIdentity = new Property(2, String.class, "userIdentity", false, "USER_IDENTITY");
+        public final static Property UserAuthentication = new Property(3, String.class, "userAuthentication", false, "USER_AUTHENTICATION");
+        public final static Property Locked = new Property(4, boolean.class, "locked", false, "LOCKED");
+        public final static Property RegisterTime = new Property(5, String.class, "registerTime", false, "REGISTER_TIME");
+        public final static Property UserName = new Property(6, String.class, "userName", false, "USER_NAME");
     }
 
 
@@ -46,13 +46,13 @@ public class UserBeanDao extends AbstractDao<UserBean, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"user\" (" + //
-                "\"ID\" INTEGER NOT NULL ," + // 0: id
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 1: _id
-                "\"USER_ACCOUND\" TEXT," + // 2: userAccound
-                "\"USER_IDENTITY\" TEXT," + // 3: userIdentity
-                "\"USER_AUTHENTICATION\" TEXT," + // 4: userAuthentication
-                "\"LOCKED\" INTEGER NOT NULL ," + // 5: locked
-                "\"REGISTER_TIME\" TEXT);"); // 6: registerTime
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
+                "\"USER_ACCOUND\" TEXT," + // 1: userAccound
+                "\"USER_IDENTITY\" TEXT," + // 2: userIdentity
+                "\"USER_AUTHENTICATION\" TEXT," + // 3: userAuthentication
+                "\"LOCKED\" INTEGER NOT NULL ," + // 4: locked
+                "\"REGISTER_TIME\" TEXT," + // 5: registerTime
+                "\"USER_NAME\" TEXT);"); // 6: userName
     }
 
     /** Drops the underlying database table. */
@@ -64,99 +64,115 @@ public class UserBeanDao extends AbstractDao<UserBean, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, UserBean entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
-        stmt.bindLong(2, entity.get_id());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
  
         String userAccound = entity.getUserAccound();
         if (userAccound != null) {
-            stmt.bindString(3, userAccound);
+            stmt.bindString(2, userAccound);
         }
  
         String userIdentity = entity.getUserIdentity();
         if (userIdentity != null) {
-            stmt.bindString(4, userIdentity);
+            stmt.bindString(3, userIdentity);
         }
  
         String userAuthentication = entity.getUserAuthentication();
         if (userAuthentication != null) {
-            stmt.bindString(5, userAuthentication);
+            stmt.bindString(4, userAuthentication);
         }
-        stmt.bindLong(6, entity.getLocked() ? 1L: 0L);
+        stmt.bindLong(5, entity.getLocked() ? 1L: 0L);
  
         String registerTime = entity.getRegisterTime();
         if (registerTime != null) {
-            stmt.bindString(7, registerTime);
+            stmt.bindString(6, registerTime);
+        }
+ 
+        String userName = entity.getUserName();
+        if (userName != null) {
+            stmt.bindString(7, userName);
         }
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, UserBean entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
-        stmt.bindLong(2, entity.get_id());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
  
         String userAccound = entity.getUserAccound();
         if (userAccound != null) {
-            stmt.bindString(3, userAccound);
+            stmt.bindString(2, userAccound);
         }
  
         String userIdentity = entity.getUserIdentity();
         if (userIdentity != null) {
-            stmt.bindString(4, userIdentity);
+            stmt.bindString(3, userIdentity);
         }
  
         String userAuthentication = entity.getUserAuthentication();
         if (userAuthentication != null) {
-            stmt.bindString(5, userAuthentication);
+            stmt.bindString(4, userAuthentication);
         }
-        stmt.bindLong(6, entity.getLocked() ? 1L: 0L);
+        stmt.bindLong(5, entity.getLocked() ? 1L: 0L);
  
         String registerTime = entity.getRegisterTime();
         if (registerTime != null) {
-            stmt.bindString(7, registerTime);
+            stmt.bindString(6, registerTime);
+        }
+ 
+        String userName = entity.getUserName();
+        if (userName != null) {
+            stmt.bindString(7, userName);
         }
     }
 
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 1);
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public UserBean readEntity(Cursor cursor, int offset) {
         UserBean entity = new UserBean( //
-            cursor.getLong(offset + 0), // id
-            cursor.getLong(offset + 1), // _id
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // userAccound
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // userIdentity
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // userAuthentication
-            cursor.getShort(offset + 5) != 0, // locked
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // registerTime
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // userAccound
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // userIdentity
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // userAuthentication
+            cursor.getShort(offset + 4) != 0, // locked
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // registerTime
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // userName
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, UserBean entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
-        entity.set_id(cursor.getLong(offset + 1));
-        entity.setUserAccound(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setUserIdentity(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setUserAuthentication(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setLocked(cursor.getShort(offset + 5) != 0);
-        entity.setRegisterTime(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setUserAccound(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setUserIdentity(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setUserAuthentication(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setLocked(cursor.getShort(offset + 4) != 0);
+        entity.setRegisterTime(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setUserName(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
      }
     
     @Override
     protected final Long updateKeyAfterInsert(UserBean entity, long rowId) {
-        entity.set_id(rowId);
+        entity.setId(rowId);
         return rowId;
     }
     
     @Override
     public Long getKey(UserBean entity) {
         if(entity != null) {
-            return entity.get_id();
+            return entity.getId();
         } else {
             return null;
         }
@@ -164,7 +180,7 @@ public class UserBeanDao extends AbstractDao<UserBean, Long> {
 
     @Override
     public boolean hasKey(UserBean entity) {
-        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
+        return entity.getId() != null;
     }
 
     @Override

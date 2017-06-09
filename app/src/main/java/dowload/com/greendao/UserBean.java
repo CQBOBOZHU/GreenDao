@@ -26,143 +26,89 @@ public class UserBean {
      * locked : false
      * registerTime : 2017-06-07 15:55:33
      */
-    private long id;
-    @Unique
     @Id(autoincrement = true)
-    private long _id;
+    private Long id;
     private String userAccound;
     private String userIdentity;
     private String userAuthentication;
     private boolean locked;
     private String registerTime;
+    private String userName;
     @Transient
     private List<?> students;
     @Transient
     private List<?> evidences;
     @Transient
     private List<?> roleList;
-
-    @Generated(hash = 1140818872)
-    public UserBean(long id, long _id, String userAccound, String userIdentity,
-                    String userAuthentication, boolean locked, String registerTime) {
-        this.id = id;
-        this._id = _id;
-        this.userAccound = userAccound;
-        this.userIdentity = userIdentity;
-        this.userAuthentication = userAuthentication;
-        this.locked = locked;
-        this.registerTime = registerTime;
-    }
-
-    public UserBean(long id, String userAccound, String userIdentity,
-                    String userAuthentication, boolean locked, String registerTime) {
+    @Generated(hash = 1788101927)
+    public UserBean(Long id, String userAccound, String userIdentity,
+            String userAuthentication, boolean locked, String registerTime,
+            String userName) {
         this.id = id;
         this.userAccound = userAccound;
         this.userIdentity = userIdentity;
         this.userAuthentication = userAuthentication;
         this.locked = locked;
         this.registerTime = registerTime;
+        this.userName = userName;
     }
-
     @Generated(hash = 1203313951)
     public UserBean() {
     }
-
-    public long getId() {
-        return id;
+    public Long getId() {
+        return this.id;
     }
-
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
-
     public String getUserAccound() {
-        return userAccound;
+        return this.userAccound;
     }
-
     public void setUserAccound(String userAccound) {
         this.userAccound = userAccound;
     }
-
     public String getUserIdentity() {
-        return userIdentity;
+        return this.userIdentity;
     }
-
     public void setUserIdentity(String userIdentity) {
         this.userIdentity = userIdentity;
     }
-
     public String getUserAuthentication() {
-        return userAuthentication;
+        return this.userAuthentication;
     }
-
     public void setUserAuthentication(String userAuthentication) {
         this.userAuthentication = userAuthentication;
     }
-
-    public boolean isLocked() {
-        return locked;
-    }
-
-    public void setLocked(boolean locked) {
-        this.locked = locked;
-    }
-
-    public String getRegisterTime() {
-        return registerTime;
-    }
-
-    public void setRegisterTime(String registerTime) {
-        this.registerTime = registerTime;
-    }
-
-    public List<?> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<?> students) {
-        this.students = students;
-    }
-
-    public List<?> getEvidences() {
-        return evidences;
-    }
-
-    public void setEvidences(List<?> evidences) {
-        this.evidences = evidences;
-    }
-
-    public List<?> getRoleList() {
-        return roleList;
-    }
-
-    public void setRoleList(List<?> roleList) {
-        this.roleList = roleList;
-    }
-
     public boolean getLocked() {
         return this.locked;
     }
-
-
-    public long get_id() {
-        return this._id;
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
-
-    public void set_id(long _id) {
-        this._id = _id;
+    public String getRegisterTime() {
+        return this.registerTime;
+    }
+    public void setRegisterTime(String registerTime) {
+        this.registerTime = registerTime;
     }
 
     @Override
     public String toString() {
         return "UserBean{" +
                 "id=" + id +
-                ", _id=" + _id +
                 ", userAccound='" + userAccound + '\'' +
                 ", userIdentity='" + userIdentity + '\'' +
                 ", userAuthentication='" + userAuthentication + '\'' +
                 ", locked=" + locked +
                 ", registerTime='" + registerTime + '\'' +
+                ", userName='" + userName + '\'' +
                 '}';
+    }
+
+    public String getUserName() {
+        return this.userName;
+    }
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

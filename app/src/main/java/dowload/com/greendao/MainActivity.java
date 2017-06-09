@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onInsert(View view) {
-        UserBean userBean = new UserBean(1, "15803006150", "0000", "什么鬼东西", false, System.currentTimeMillis() + "");
+        UserBean userBean = new UserBean(null, "15803006150", "0000", "什么鬼东西", false, System.currentTimeMillis() + "","王尼玛");
         MyApplication.daoSession.getUserBeanDao().insert(userBean);
     }
 
