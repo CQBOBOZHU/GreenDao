@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     UserBeanDao userBeanDao;
     ListView listView;
 
+    List<UserBean> userBeans;
+    ListAdapter listAdater;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,17 +32,22 @@ public class MainActivity extends AppCompatActivity {
         userBeanDao = MyApplication.daoSession.getUserBeanDao();
     }
 
+    /**
+     * 插入数据
+     * @param view
+     */
     public void onInsert(View view) {
-        UserBean userBean = new UserBean(null, "15888888888", "0000", "什么鬼东西", false, System.currentTimeMillis() + "", "别人家的媳妇");
+        UserBean userBean = new UserBean(null, "15888888888", "0000", "今日头条", false, System.currentTimeMillis() + "", "贝塔俺的嘎马");
         userBeanDao.insert(userBean);
     }
 
-    List<UserBean> userBeans;
-    ListAdapter listAdater;
-
+    /**
+     * 查找
+     * @param view
+     */
     public void onFind(View view) {
         userBeans = MyApplication.daoSession.getUserBeanDao().loadAll();
-        if (userBeans != null) {
+        if (userBeans != null&&userBeans.size()>0) {
             if (listAdater == null) {
                 listAdater = new ListAdapter(userBeans);
                 listView.setAdapter(listAdater);
@@ -51,17 +59,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * 更新某条数据
+     */
     public void onUpdate(View view) {
         if (userBeans != null) {
             UserBean userBean = userBeans.get(0);
-            userBean.setUserName("你大爷的大爷的大爷");
+            userBean.setUserName("贝塔俺的嘎马更新后的数据");
             userBeanDao.update(userBean);
         } else {
             Toast.makeText(this, "请先查询", Toast.LENGTH_SHORT).show();
         }
     }
 
+    /**
+     * 删除第一条数据
+     * @param view
+     */
     public void onDelete(View view) {
         if (userBeans != null) {
             userBeanDao.delete(userBeans.get(0));
