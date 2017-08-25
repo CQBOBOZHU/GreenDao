@@ -1,10 +1,12 @@
 package dowload.com.greendao;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,6 +29,13 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.user_tv);
         listView = (ListView) findViewById(R.id.listView);
         userBeanDao = MyApplication.daoSession.getUserBeanDao();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(MainActivity.this,Main3Activity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
     }
 
     public void onInsert(View view) {
