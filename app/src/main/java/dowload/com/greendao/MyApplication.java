@@ -19,5 +19,10 @@ public class MyApplication extends Application {
         MySQLiteOpenHelper mySQLiteOpenHelper = new MySQLiteOpenHelper(this, "test.db", null);
         DaoMaster daoMaster = new DaoMaster(mySQLiteOpenHelper.getWritableDb());
         daoSession = daoMaster.newSession();
+
+        DaoMaster.DevOpenHelper devOpenHelper=new DaoMaster.DevOpenHelper(this, "test.db", null);
+        DaoMaster daoMaster1=new DaoMaster(devOpenHelper.getWritableDb());
+        daoSession = daoMaster.newSession();
+
     }
 }
