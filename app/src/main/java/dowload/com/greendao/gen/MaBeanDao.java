@@ -25,9 +25,8 @@ public class MaBeanDao extends AbstractDao<MaBean, Long> {
      */
     public static class Properties {
         public final static Property Age = new Property(0, int.class, "age", false, "AGE");
-        public final static Property Id = new Property(1, Long.class, "id", true, "_id");
+        public final static Property MId = new Property(1, Long.class, "mId", true, "_id");
         public final static Property Name = new Property(2, String.class, "name", false, "NAME");
-        public final static Property MId = new Property(3, Long.class, "mId", false, "M_ID");
     }
 
 
@@ -44,9 +43,8 @@ public class MaBeanDao extends AbstractDao<MaBean, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"MA_BEAN\" (" + //
                 "\"AGE\" INTEGER NOT NULL ," + // 0: age
-                "\"_id\" INTEGER PRIMARY KEY ," + // 1: id
-                "\"NAME\" TEXT," + // 2: name
-                "\"M_ID\" INTEGER UNIQUE );"); // 3: mId
+                "\"_id\" INTEGER PRIMARY KEY ," + // 1: mId
+                "\"NAME\" TEXT);"); // 2: name
     }
 
     /** Drops the underlying database table. */
@@ -60,19 +58,14 @@ public class MaBeanDao extends AbstractDao<MaBean, Long> {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getAge());
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(2, id);
+        Long mId = entity.getMId();
+        if (mId != null) {
+            stmt.bindLong(2, mId);
         }
  
         String name = entity.getName();
         if (name != null) {
             stmt.bindString(3, name);
-        }
- 
-        Long mId = entity.getMId();
-        if (mId != null) {
-            stmt.bindLong(4, mId);
         }
     }
 
@@ -81,19 +74,14 @@ public class MaBeanDao extends AbstractDao<MaBean, Long> {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getAge());
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(2, id);
+        Long mId = entity.getMId();
+        if (mId != null) {
+            stmt.bindLong(2, mId);
         }
  
         String name = entity.getName();
         if (name != null) {
             stmt.bindString(3, name);
-        }
- 
-        Long mId = entity.getMId();
-        if (mId != null) {
-            stmt.bindLong(4, mId);
         }
     }
 
@@ -106,9 +94,8 @@ public class MaBeanDao extends AbstractDao<MaBean, Long> {
     public MaBean readEntity(Cursor cursor, int offset) {
         MaBean entity = new MaBean( //
             cursor.getInt(offset + 0), // age
-            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // id
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
-            cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3) // mId
+            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // mId
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // name
         );
         return entity;
     }
@@ -116,21 +103,20 @@ public class MaBeanDao extends AbstractDao<MaBean, Long> {
     @Override
     public void readEntity(Cursor cursor, MaBean entity, int offset) {
         entity.setAge(cursor.getInt(offset + 0));
-        entity.setId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
+        entity.setMId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
         entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setMId(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
      }
     
     @Override
     protected final Long updateKeyAfterInsert(MaBean entity, long rowId) {
-        entity.setId(rowId);
+        entity.setMId(rowId);
         return rowId;
     }
     
     @Override
     public Long getKey(MaBean entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.getMId();
         } else {
             return null;
         }
@@ -138,7 +124,7 @@ public class MaBeanDao extends AbstractDao<MaBean, Long> {
 
     @Override
     public boolean hasKey(MaBean entity) {
-        return entity.getId() != null;
+        return entity.getMId() != null;
     }
 
     @Override

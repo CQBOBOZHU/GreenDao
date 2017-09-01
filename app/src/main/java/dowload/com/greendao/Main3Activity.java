@@ -84,10 +84,9 @@ public class Main3Activity extends AppCompatActivity {
     public void onAddMa(View view) {
         if (manBean != null) {
             MaBean maBean = new MaBean();
-            maBean.setId(null);
+            maBean.setMId(manBean.getMId());
             maBean.setName("wo shi ni mama");
             maBean.setAge(50);
-            maBean.setMId(manBean.getMId());
             maBeanDao.insertOrReplaceInTx(maBean);
         }
     }

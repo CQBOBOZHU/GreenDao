@@ -159,11 +159,11 @@ public class ManBean {
         return maBean;
     }
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 617449661)
+    @Generated(hash = 873246165)
     public void setMaBean(MaBean maBean) {
         synchronized (this) {
             this.maBean = maBean;
-            mId = maBean == null ? null : maBean.getId();
+            mId = maBean == null ? null : maBean.getMId();
             maBean__resolvedKey = mId;
         }
     }
